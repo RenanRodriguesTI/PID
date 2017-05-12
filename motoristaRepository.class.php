@@ -18,6 +18,7 @@
             }   
             catch(Exception $e)
             {
+               
                 Desconectar($pdo);
             }            
         }
@@ -25,7 +26,7 @@
         {
             try{
                 $pdo = Conectar();
-
+                $comando = $pdo->prepare("update motorista set NOME_FUN = :NOME, RG_FUN = :RG, CPF_FUN = :CPF, DTADMISSAO_FUN = :DTADMISSAO, DTDEMISSAO_FUN = :DTDEMISSAO");
                 Desconectar();
 
             }
