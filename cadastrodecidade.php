@@ -1,5 +1,7 @@
 <?php
-require "funcoes.php";
+require "cidade.class.php";
+require "cidadeRepository.class.php";
+
     $cidade = $estado = "";
     $id=0;
 ?>
@@ -27,19 +29,26 @@ require "funcoes.php";
         $id = $_POST["cod"];
         $cidade = $_POST["cidade"];
         $estado = $_POST["estado"];
-      cadastracidadeeestado($cidade,$estado,$id);
+        $objcidade = new cidade(0,$cidade,$estado);
+        $gravar = new cidadeRepository($objcidade);
+        $gravar->gravar();
     }
     if(isset($_POST["alterar"]))
     {
         $id = $_POST["cod"];
-           $cidade = $_POST["cidade"];
+        $cidade = $_POST["cidade"];
         $estado = $_POST["estado"];
-        alterarcidade($id,$cidade,$estado);
+        $objcidade = new cidade($id,$cidade,$estado);
+        $alterar = new cidadeRepository($objcidade);
     }
     if(isset($_POST["excluir"]))
     {
         $id = $_POST["cod"];
         excluircidade($id);
+        $objcidade = new cidade();
+        $objcidade->setCidade($id);
+        $excluir = new cidadeRepository;
+        $excluir->excluir($id);
     }
 ?>
 </form>

@@ -89,7 +89,25 @@
     public function validacao()
     {
         //atribuir validações no objeto cliente
+		/*
+
+		*/
+		return true;
     }
+	
+	 public function validacpf()
+	 {
+		   $cpfval=false;
+
+
+          $dg1 = $dg2 = $num = $contcarat = $pos= 0;
+		$cont = $verifdg1 = $verifdg2=0; 
+		$soma1dig =  $soma2dig = 0;
+		$mult = 2;
+        $text="";
+             
+	 }
+	
     }
 
 ?>

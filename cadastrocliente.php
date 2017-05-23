@@ -1,4 +1,6 @@
 <?php
+require "clienteRepository.class.php";
+require_once "cliente.class.php";
 require "funcoes.php";
       $cep = $bairro = $cidade = $rua = $vet = "";
 
@@ -49,6 +51,7 @@ if(isset($_POST["btnCadastrar"])&& $codigodacidade)
 }
 if(isset($_POST["btnAlterar"]))
 {
+    $identcli = $_POST["txtcodcli"];
     $nome= $_POST["txtnome"];
     $email = $_POST["email"];
     $login = $_POST["login"];
@@ -67,7 +70,39 @@ if(isset($_POST["btnAlterar"]))
     carregacliente($codcliente,$nome,$email,$rua,$bairro,$cep,$senha,$identcli);
     
 }*/
+
+if(isset($_POST["localizar"]))
+{
+    $codcliente = $_POST["txtcodcli"];
+    $objcliente = new cliente();
+   
+    $objdbcliente = new clienteRepository();
+    
+     $confirmasenha=   $objdbcliente ->localizarcodigo($codcliente);
+     $identcli = $confirmasenha["COD_CLIENTE"];
+     $codigodacidade = $confirmasenha["COD_CIDADE"];
+     $nome = $confirmasenha["NOME_CLIENTE"];
+     $email = $confirmasenha["EMAIL_CLIENTE"];
+     $rua = $confirmasenha["ENDERECO_CLIENTE"];
+     $bairro = $confirmasenha["BAIRRO_CLIENTE"];
+     $cep = $confirmasenha["CEP_CLIENTE"];
+     $login = $confirmasenha["LOGIN_CLIENTE"];
+     $senha = $confirmasenha["SENHA_CLIENTE"];
+     
+     $objcliente =$objdbcliente =null;
+}
+
+if(isset($_POST["excluir"]))
+{
+    $identcli = $_POST["txtcodcli"];
+   $objcliente = new cliente();
+   
+    $objdbcliente = new clienteRepository();
+    $objdbcliente->excluir($identcli);
+}
         ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -94,21 +129,23 @@ if(isset($_POST["btnAlterar"]))
     <form name="formulariocad" id="formulariocotacao" action="cadastrocliente.php" method="post"> 
         <fieldset>
         <legend>CADASTRO DO USUÁRIO</legend>
+         <label style="width: 50px;">Código: (Consulta) <span style="color:red"></span></label><br/>
+        <input style="width: 350px;" type="text" id="txtcodcli" name="txtcodcli" value="<?=$codcliente ?>"  />
+        <input type="submit" name="localizar" value="Localizar"/>
+            <br/>
         <label>Email</label><br>
-        <input type="email" style="width:200px" name="email" /><br>
+        <input type="email" style="width:200px" name="email" value="<?=$email?>"/><br>
         <label>Login</label><br>
-        <input type="text" name="login" /><br>
+        <input type="text" name="login" value="<?=$login?>" /><br>
         <label>Senha</label><br>
-        <input type="text" name="senha" /><br>
+        <input type="text" name="senha" value="<?=$senha?>"/><br>
         <label>Confirmar senha</label><br>
         <input type="text" name="confirmarsenha" />
         </fieldset>
 
         <fieldset>
         <legend>informações pessoais do cliente</legend>
-         <label style="width: 50px;">Código: (Consulta) <span style="color:red"></span></label><br/>
-        <input style="width: 350px;" type="text" id="txtcodcli" name="txtcodcli" value="<?=$codcliente ?>"  />
-            <br/>
+        
         <span id="msg"></span>
         <label style="width: 50px;">Nome Completo:* <span style="color:red"></span></label><br/>
         <input style="width: 350px;" type="text" id="txtNome" name="txtnome" value="<?=$nome ?>"/>
@@ -136,6 +173,7 @@ if(isset($_POST["btnAlterar"]))
 
          <input  type="submit" id="btnCadastrar" name="btnCadastrar" value="Cadastrar"/>
         <input  type="submit" id="btnAlterar" name="btnAlterar" value="Alterar"/>
+        <input type="submit" name="excluir" value="Excluir"/>
          <input  type="submit" name="btnCancelar" value="Cancelar"/>
         <br/>
     </form>

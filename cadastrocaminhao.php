@@ -1,6 +1,6 @@
 <?php
 require "caminhao.class.php";
-require "caminhaoRepository.php";
+require "caminhaoRepository.class.php";
 //inicia as variaveis com vazio
 $idcaminhao= $codplaca = $anofab = $combustivel="";
 //objeto da classe caminhao.class.php
@@ -17,7 +17,7 @@ if(isset($_POST["btn_cadastrar"]))
     //Tipo do combustivel
     $combustivel = $_POST["combustivel"];
     $classcaminhao = new caminhao($idcaminhao,$codplaca,$anofab,$combustivel);
-    $caminhaor = new caminhaoRepository($classcaminhao);
+    $caminhaor = new caminhaoRepository;
     $caminhaor->gravar($classcaminhao);
 }
 
