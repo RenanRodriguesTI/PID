@@ -1,4 +1,6 @@
 <?php
+require "clienteRepository.class.php";
+require_once "cliente.class.php";
 require "funcoes.php";
       $cep = $bairro = $cidade = $rua = $vet = "";
 
@@ -67,6 +69,17 @@ if(isset($_POST["btnAlterar"]))
     carregacliente($codcliente,$nome,$email,$rua,$bairro,$cep,$senha,$identcli);
     
 }*/
+
+if(isset($_POST["localizar"]))
+{
+    $codcliente = $_POST["txtcodcli"];
+    $objcliente = new cliente();
+   
+    $objdbcliente = new clienteRepository();
+    
+     $confirmasenha=   $objdbcliente ->localizarcodigo($codcliente);
+    
+}
         ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -94,6 +107,10 @@ if(isset($_POST["btnAlterar"]))
     <form name="formulariocad" id="formulariocotacao" action="cadastrocliente.php" method="post"> 
         <fieldset>
         <legend>CADASTRO DO USUÁRIO</legend>
+         <label style="width: 50px;">Código: (Consulta) <span style="color:red"></span></label><br/>
+        <input style="width: 350px;" type="text" id="txtcodcli" name="txtcodcli" value="<?=$codcliente ?>"  />
+        <input type="submit" name="localizar" value="Localizar"/>
+            <br/>
         <label>Email</label><br>
         <input type="email" style="width:200px" name="email" /><br>
         <label>Login</label><br>
@@ -106,9 +123,7 @@ if(isset($_POST["btnAlterar"]))
 
         <fieldset>
         <legend>informações pessoais do cliente</legend>
-         <label style="width: 50px;">Código: (Consulta) <span style="color:red"></span></label><br/>
-        <input style="width: 350px;" type="text" id="txtcodcli" name="txtcodcli" value="<?=$codcliente ?>"  />
-            <br/>
+        
         <span id="msg"></span>
         <label style="width: 50px;">Nome Completo:* <span style="color:red"></span></label><br/>
         <input style="width: 350px;" type="text" id="txtNome" name="txtnome" value="<?=$nome ?>"/>

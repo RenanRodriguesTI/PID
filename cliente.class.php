@@ -89,6 +89,7 @@
     public function validacao()
     {
         //atribuir validações no objeto cliente
+		return true;
     }
     }
 

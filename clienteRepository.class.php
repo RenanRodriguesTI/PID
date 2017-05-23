@@ -1,6 +1,8 @@
 <?php
+require_once "cliente.class.php";
+require "banco.php";
     //classe responsável por gerenciar a gravação dos dados do cliente
-    class Gerenciarclientes {
+    class clienteRepository {
 
         public function gravar($cliente)
 {
