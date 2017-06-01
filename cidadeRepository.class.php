@@ -104,10 +104,14 @@ require_once "banco.php";
                 $comando->bindValue(":cidade",$nome);
                 //executa o comando sql
                 $comando->execute();
+                if($linha=$comando->fetch(PDO::FETCH_ASSOC))
+                {
+                    return $linha["COD_CIDADE"];
+                }
+
                 //fecha a conexão
                 Desconectar($pdo);
-                //fecha a conexão
-                Desconectar($pdo);
+                
 
             }
             catch(Exception $e)

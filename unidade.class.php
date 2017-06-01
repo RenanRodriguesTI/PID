@@ -1,21 +1,29 @@
 <?php
+require_once "cidade.class.php";
  class unidade{
      //atributo correspondente ao código da unidade
      private $codunidade;
      //atributo correspondente ao nome da unidade
      private $nomeunidade;
      //atributo correspondente ao código da cidade
-     private $codcidade;
+     private $cidade;
 
      //métodos
-     public function __construct($codunidade="",$nomeunidade="",$codcidade=null)
+     public function __construct($codunidade="",$cidade=null,$nomeunidade="")
      {
         //o atributo codunidade recebe o parametro $codunidade
            $this->codunidade = $codunidade;
            //o atributo nomeunidade recebe o parametro $nomeunidade
            $this->nomeunidade = $nomeunidade;
            //o atributo codcidade recebe o parametro $codcidade
-            $this->codcidade = $codcidade;
+            if($cidade == null)
+            {
+                $this->cidade = new cidade();
+            }
+            else
+            {
+                $this->cidade =$cidade;
+            }
 
             
          
@@ -23,29 +31,29 @@
 
      }
      //retorna o valor do atributo código unidade
-    public function getcodunidade(){
+    public function getCodunidade(){
 		return $this->codunidade;
 	}
     //recebe o valor do atributo código 
-	public function setcodunidade($codunidade){
+	public function setCodunidade($codunidade){
 		$this->codunidade = $codunidade;
 	}
     //retorna o nome da unidade
-	public function getnomeunidade(){
+	public function getNomeunidade(){
 		return $this->nomeunidade;
 	}
     //recebe o nome da unidade
-	public function setnomeunidade($nomeunidade){
+	public function setNomeunidade($nomeunidade){
 		$this->nomeunidade = $nomeunidade;
 	}
     //retorna código cidade 
-	public function getcodcidade(){
-		return $this->codcidade;
+	public function getCidade(){
+		return $this->cidade;
 	}
     //recebe o código da cidade
-	public function setcodcidade($codcidade){
+	public function setCidade($cidade){
         //alterar pois será necessário implementar o objeto
-		$this->codcidade = $codcidade;
+		$this->codcidade = $cidade;
 	}
  }
 ?>

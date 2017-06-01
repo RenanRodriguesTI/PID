@@ -1,6 +1,6 @@
 <?php
 require_once "cliente.class.php";
-require "banco.php";
+require_once "banco.php";
     //classe responsável por gerenciar a gravação dos dados do cliente
     class clienteRepository {
 
@@ -11,19 +11,20 @@ require "banco.php";
         //cria objeto de conexão com o banco
         $pdo = Conectar();
         //prepara um comando  de inserção no banco de dados
-        $comando = $pdo-> prepare ("insert into cliente(NOME_CLIENTE,EMAIL_CLIENTE,ENDERECO_CLIENTE,BAIRRO_CLIENTE,CEP_CLIENTE,LOGIN_CLIENTE,SENHA_CLIENTE,COD_CIDADE) values(:NOME_CLIENTE,:EMAIL_CLIENTE,:ENDERECO_CLIENTE,:BAIRRO_CLIENTE,:CEP_CLIENTE,:LOGIN_CLIENTE,:SENHA_CLIENTE,:COD_CIDADE)");
+        $comando = $pdo-> prepare ("insert into cliente(NOME_CLIENTE,EMAIL_CLIENTE,ENDERECO_CLIENTE,BAIRRO_CLIENTE,CEP_CLIENTE,COD_CIDADE,LOGIN_CLIENTE,SENHA_CLIENTE) values(:NOME_CLIENTE,:EMAIL_CLIENTE,:ENDERECO_CLIENTE,:BAIRRO_CLIENTE,:CEP_CLIENTE,:COD_CIDADE,:LOGIN_CLIENTE,:SENHA_CLIENTE)");
         //cria um vetor da posição Nome_cliente recebendo o array
-        $parametro[":NOME_CLIENTE"]= $cliente->getNomecliente();
-        $parametro[":EMAIL_CLIENTE"]= $cliente->getEmail();
-        $parametro[":ENDERECO_CLIENTE"]= $cliente->getEndereco();
-        $parametro[":BAIRRO_CLIENTE"]= $cliente->getBairro();
-      
-        $parametro[":COD_CIDADE"] = $cliente->getCodcidade();
-        $parametro[":CEP_CLIENTE"]= $cliente->getCep();
-        $parametro[":LOGIN_CLIENTE"]= $cliente->getLogin();
-        $parametro[":SENHA_CLIENTE"]=$cliente->getsenha();
+        $comando->bindValue(":NOME_CLIENTE",$cliente->getNomecliente());
+        $comando->bindValue(":EMAIL_CLIENTE", $cliente->getEmail());
+        $comando->bindValue(":ENDERECO_CLIENTE", $cliente->getEndereco());
+        $comando->bindValue(":BAIRRO_CLIENTE",$cliente->getBairro());
+        $comando->bindValue(":COD_CIDADE",$cliente->getCodcidade()->getCodcidade());
+        $comando->bindValue(":CEP_CLIENTE",$cliente->getCep());
+         $comando->bindValue(":LOGIN_CLIENTE",$cliente->getLogin());
+       $comando->bindValue(":SENHA_CLIENTE",$cliente->getsenha());
+     
+       
         //executa o comando de inserção no banco passando como parametro o array $parametro
-        $comando ->execute($parametro);
+        $comando ->execute();
         Desconectar($pdo);
 
     }
@@ -36,24 +37,25 @@ require "banco.php";
 
 }
 
-public function Alterar ($cliente)
+public function alterar ($cliente)
 
 {
     //Esta função deverá alterar os dados dos clientes cadastrados
     try{
-        $pdo = getConnection();
-        $comando = $pdo->prepare("update cliente set nome_cliente =:nome, email_cliente =:email,endereco_cliente=:endereco,bairro_cliente=:bairro,cep_cliente = :cep,login_cliente = :login,senha_cliente = :senha, cod_cidade = :cidade where cod_cliente = :codcli");
-        $parametro[":codcli"]=$cliente->getCodcliente();
-         
-        $parametro[":nome"] = $cliente->getNomecliente();
-        $parametro[":email"] = $cliente->getEmail();
-        $parametro[":endereco"] = $cliente->getEndereco();
-        $parametro[":bairro"] = $cliente->getBairro();
-        $parametro[":cep"] = $cliente->getCep();
-        $parametro[":login"] = $cliente->getLogin();
-        $parametro[":senha"] = $cliente->getSenha();
-        $comando ->execute($parametro); 
-        $pdo=null;
+        $pdo = Conectar();
+        $comando = $pdo->prepare("update cliente set nome_cliente =:NOME_CLIENTE, email_cliente =:EMAIL_CLIENTE,endereco_cliente=:ENDERECO_CLIENTE,bairro_cliente=:BAIRRO_CLIENTE,cep_cliente = :CEP_CLIENTE,login_cliente = :LOGIN_CLIENTE,senha_cliente = :SENHA_CLIENTE, cod_cidade = :COD_CIDADE where cod_cliente = :COD_CLIENTE");
+      
+         $comando->bindValue(":COD_CLIENTE",$cliente->getCodcliente());
+         $comando->bindValue(":NOME_CLIENTE",$cliente->getNomecliente());
+        $comando->bindValue(":EMAIL_CLIENTE", $cliente->getEmail());
+        $comando->bindValue(":ENDERECO_CLIENTE", $cliente->getEndereco());
+        $comando->bindValue(":BAIRRO_CLIENTE",$cliente->getBairro());
+        $comando->bindValue(":COD_CIDADE",$cliente->getCodcidade()->getCodcidade());
+        $comando->bindValue(":CEP_CLIENTE",$cliente->getCep());
+         $comando->bindValue(":LOGIN_CLIENTE",$cliente->getLogin());
+       $comando->bindValue(":SENHA_CLIENTE",$cliente->getSenha());
+        $comando ->execute(); 
+        Desconectar($pdo);
     }
     catch(Exception $e)
     {
@@ -62,13 +64,13 @@ public function Alterar ($cliente)
      
 }
 
-public function Excluir($cod)
+public function excluir($cod)
 {
     //Exclui os clientes cadastrados
     try{
         $pdo = Conectar();
-        $comando =$pdo->prepare("delete from cliente where cod_cliente = :codcliente");
-        $comando->bindValue(":codcliente",$cod);
+        $comando =$pdo->prepare("delete from cliente where cod_pessoa = :codpessoa");
+        $comando->bindValue(":codpessoa",$cod);
         $comando->execute();
         Desconectar($pdo);
 

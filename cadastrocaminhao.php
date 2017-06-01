@@ -19,6 +19,24 @@ if(isset($_POST["btn_cadastrar"]))
     $classcaminhao = new caminhao($idcaminhao,$codplaca,$anofab,$combustivel);
     $caminhaor = new caminhaoRepository;
     $caminhaor->gravar($classcaminhao);
+
+      $clioption= $_POST["clioption"];
+    if($clioption =="J")
+    {
+        $checked2 = "checked";
+        $checked = "";
+        $CPF_CNPJ = "CNPJ";
+        $RG_RAZ ="Razao Social";
+        $nomefantasiainput = "<label>Nome Fantasia</label><br><input type='text' name='nomefantasia' /><br>";
+    }
+    else
+    {
+        $checked = "checked";
+        $checked2 = "";
+        $CPF_CNPJ = "CPF";
+        $RG_RAZ ="RG";
+        $nomefantasiainput="";
+    }
 }
 
 ?>

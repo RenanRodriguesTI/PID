@@ -2,18 +2,42 @@
 
 class romaneio{
     private $codromaneio;
-    private $dataemissao;
-    private $motorista;
+	private $motorista;
     private $codcaminhao;
     private $codencomenda;
+	private $origem;
+	private $destino;
+    private $dataemissao;
+    
 
-    public function __construct($codromaneio="",$dataemissao="", $motorista=null,$codcamihao=null,$codencomenda=null)
+    public function __construct($codromaneio="",$dataemissao="", $motorista=null,$codcaminhao=null,$codencomenda=null)
     {
         $this->codromaneio = $codromaneio;
         $this->dataemissao = $dataemissao;
-        $this->motorista = $motorista;
-        $this->codcaminhao = $codcaminhao;
-        $this->codencomenda = $codencomenda;
+		if($motorista == null)
+		{
+			$this->$motorista = new motorista();
+		}
+		else{
+			$this->motorista = $motorista;
+
+		}
+		if($codcaminhao == null)
+		{
+			//$this->motorista = new caminhao();
+		}
+		else{
+			 $this->codcaminhao = $codcaminhao;
+		}
+        if($codencomenda == null)
+		{
+			//$this->codencomenda = new encomenda();
+		}
+		else{
+			$this->codencomenda = $codencomenda;
+		}
+      
+        
     }
 
     	public function getCodromaneio(){
@@ -54,6 +78,21 @@ class romaneio{
 
 	public function setCodencomenda($codencomenda){
 		$this->codencomenda = $codencomenda;
+	}
+	public function getOrigem(){
+		return $this->origem;
+	}
+
+	public function setOrigem($origem){
+		$this->origem = $origem;
+	}
+
+	public function getDestino(){
+		return $this->destino;
+	}
+
+	public function setDestino($destino){
+		$this->destino = $destino;
 	}
 }
 

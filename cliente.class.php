@@ -1,5 +1,7 @@
 <?php
-//objeto cliente 
+//objeto cidade 
+require_once "cidade.class.php";
+
 //contém todos os atributos do cliente
     class cliente{
         private $codcliente;
@@ -8,10 +10,34 @@
         private $email;
         private $endereco;
         private $bairro;
-        
         private $cep;
-        private $login;
-        private $senha;
+		//objeto cliente ou funcionario
+		private $login;
+		private $senha;
+    
+
+	public function __construct($codcliente=0,$codcidade=null,$nomecliente="",$email="",$endereco="",$bairro="",$cep="",$login="",$senha="")
+	{
+		$this->codcliente=$codcliente;
+		if($codcidade == null)
+		{
+			$this->codcidade = new cidade();
+		}
+		else{
+			$this->codcidade = $codcidade;
+
+		}
+	
+		$this->nomecliente=$nomecliente;
+		$this->email = $email;
+		$this->endereco = $endereco;
+		$this->bairro = $bairro;
+		$this->cep = $cep;
+		$this->login = $login;
+		$this->senha = $senha;
+		
+	
+	}
 
     public function getCodcliente(){
 		return $this->codcliente;

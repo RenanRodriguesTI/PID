@@ -31,7 +31,7 @@ require "cidadeRepository.class.php";
         $estado = $_POST["estado"];
         $objcidade = new cidade(0,$cidade,$estado);
         $gravar = new cidadeRepository($objcidade);
-        $gravar->gravar();
+        $gravar->gravar($objcidade);
     }
     if(isset($_POST["alterar"]))
     {
